@@ -3,6 +3,7 @@ from aiohttp import web
 
 from infra.config.configuration import env
 from infra.http.routes import setup_http_routes
+from app.use_cases.billing_use_case import BillingUseCase
 
 
 @web.middleware
@@ -20,15 +21,15 @@ async def error_middleware(
         return web.json_response({"error": "Internal Server Error"}, status=500)
 
 
-def create_app() -> web.Application:
+def create_app(billing_use_case: BillingUseCase) -> web.Application:
     app = web.Application(middlewares=[error_middleware])
-    setup_http_routes(app)
+    setup_http_routes(app, billing_use_case)
     return app
 
 
-async def start_http_server() -> web.AppRunner:
+async def start_http_server(billing_use_case: BillingUseCase) -> web.AppRunner:
     http_port = int(env.HTTP_PORT)
-    app = create_app()
+    app = create_app(billing_use_case)
 
     runner = web.AppRunner(app, access_log=None)
     await runner.setup()
