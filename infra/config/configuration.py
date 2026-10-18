@@ -60,6 +60,10 @@ class EnvConfig:
     @property
     def DB_POOL_MAX(self) -> int:
         return validator("DB_POOL_MAX", "number", os.getenv("DB_POOL_MAX"))
+    
+    @property
+    def PROTOCOL(self) -> str:
+        return validator("PROTOCOL", "string", os.getenv("PROTOCOL"))
 
 
 env = EnvConfig()
