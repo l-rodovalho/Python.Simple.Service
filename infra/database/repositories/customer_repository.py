@@ -7,10 +7,9 @@ class CustomerRepository:
 
     async def find_by_id(self, customer_id: str) -> Optional[dict[str, Any]]:
         query = """
-            SELECT * 
+            SELECT cd_cliente, nome, endereco_cobranca 
             FROM cliente 
-            WHERE cd_cliente = $1 AND ativo = true 
-            LIMIT 1;
+            WHERE cd_cliente = $1 AND ativo = true
         """
         
         async with self.pool.acquire() as connection:
