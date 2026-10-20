@@ -21,11 +21,14 @@ class DatabaseConnection:
                 user=env.DB_USER,
                 password=env.DB_PASSWORD,
                 database=env.DB_NAME,
-                max_size=env.DB_POOL_MAX,
-                min_size=1,
+                min_size=0,
+                max_size=10,
+                timeout=5.0,
+                command_timeout=30.0,
             )
-            
-            print("Connected to PostgreSQL successfully on port", env.DB_PORT)
+
+            async with cls._pool.acquire() as connection:
+                print("Connected to PostgreSQL successfully on port", env.DB_PORT)
         return cls._pool
 
     @classmethod
