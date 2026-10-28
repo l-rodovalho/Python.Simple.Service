@@ -22,7 +22,7 @@ class DatabaseConnection:
                 password=env.DB_PASSWORD,
                 database=env.DB_NAME,
                 min_size=0,
-                max_size=10,
+                max_size=env.DB_POOL_MAX,
                 timeout=5.0,
                 command_timeout=30.0,
             )
