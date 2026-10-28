@@ -24,7 +24,7 @@ _sym_db = _symbol_database.Default()
 
 
 
-DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\rbilling.proto\x12\x07\x62illing\"%\n\x0e\x42illingRequest\x12\x13\n\x0b\x63ustomer_id\x18\x01 \x01(\t\"W\n\x0f\x42illingResponse\x12\x13\n\x0b\x63ustomer_id\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\x12!\n\x07metrics\x18\x03 \x01(\x0b\x32\x10.billing.Metrics\"Z\n\x07Metrics\x12\x1a\n\x12invoices_processed\x18\x01 \x01(\x05\x12\x12\n\ntotal_paid\x18\x02 \x01(\t\x12\x1f\n\x17total_due_with_interest\x18\x03 \x01(\t2U\n\x0e\x42illingService\x12\x43\n\x0eProcessBilling\x12\x17.billing.BillingRequest\x1a\x18.billing.BillingResponseb\x06proto3')
+DESCRIPTOR = _descriptor_pool.Default().AddSerializedFile(b'\n\rbilling.proto\x12\x07\x62illing\"%\n\x0e\x42illingRequest\x12\x13\n\x0b\x63ustomer_id\x18\x01 \x01(\t\"W\n\x0f\x42illingResponse\x12\x13\n\x0b\x63ustomer_id\x18\x01 \x01(\t\x12\x0c\n\x04name\x18\x02 \x01(\t\x12!\n\x07metrics\x18\x03 \x01(\x0b\x32\x10.billing.Metrics\"Z\n\x07Metrics\x12\x1a\n\x12invoices_processed\x18\x01 \x01(\x05\x12\x12\n\ntotal_paid\x18\x02 \x01(\t\x12\x1f\n\x17total_due_with_interest\x18\x03 \x01(\t\"K\n\x07Invoice\x12\x0e\n\x06\x61mount\x18\x01 \x01(\x01\x12\x14\n\x0c\x64\x61ys_overdue\x18\x02 \x01(\x05\x12\x0c\n\x04paid\x18\x03 \x01(\x08\x12\x0c\n\x04tier\x18\x04 \x01(\x05\"N\n\x18\x43\x61lculateInvoicesRequest\x12\"\n\x08invoices\x18\x01 \x03(\x0b\x32\x10.billing.Invoice\x12\x0e\n\x06rounds\x18\x02 \x01(\x05\"\x84\x01\n\x19\x43\x61lculateInvoicesResponse\x12\x1a\n\x12invoices_processed\x18\x01 \x01(\x05\x12\x12\n\ntotal_paid\x18\x02 \x01(\t\x12\x16\n\x0etotal_discount\x18\x03 \x01(\t\x12\x1f\n\x17total_due_with_interest\x18\x04 \x01(\t2\xb1\x01\n\x0e\x42illingService\x12\x43\n\x0eProcessBilling\x12\x17.billing.BillingRequest\x1a\x18.billing.BillingResponse\x12Z\n\x11\x43\x61lculateInvoices\x12!.billing.CalculateInvoicesRequest\x1a\".billing.CalculateInvoicesResponseb\x06proto3')
 
 _globals = globals()
 _builder.BuildMessageAndEnumDescriptors(DESCRIPTOR, _globals)
@@ -37,6 +37,12 @@ if not _descriptor._USE_C_DESCRIPTORS:
   _globals['_BILLINGRESPONSE']._serialized_end=152
   _globals['_METRICS']._serialized_start=154
   _globals['_METRICS']._serialized_end=244
-  _globals['_BILLINGSERVICE']._serialized_start=246
-  _globals['_BILLINGSERVICE']._serialized_end=331
+  _globals['_INVOICE']._serialized_start=246
+  _globals['_INVOICE']._serialized_end=321
+  _globals['_CALCULATEINVOICESREQUEST']._serialized_start=323
+  _globals['_CALCULATEINVOICESREQUEST']._serialized_end=401
+  _globals['_CALCULATEINVOICESRESPONSE']._serialized_start=404
+  _globals['_CALCULATEINVOICESRESPONSE']._serialized_end=536
+  _globals['_BILLINGSERVICE']._serialized_start=539
+  _globals['_BILLINGSERVICE']._serialized_end=716
 # @@protoc_insertion_point(module_scope)

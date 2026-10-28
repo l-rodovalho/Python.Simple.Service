@@ -3,21 +3,26 @@ import asyncio
 
 from infra.config.configuration import env
 from infra.database.connection import DatabaseConnection
+from infra.database.repositories.customer_repository import CustomerRepository
 from infra.http.http_server import start_http_server
 from infra.grpc.grpc_server import start_grpc_server
-from app.factories.make_billing_use_case import make_billing_use_case
+from app.use_cases.billing_use_case import BillingUseCase
+from app.use_cases.calculate_invoices_use_case import CalculateInvoicesUseCase
 
 async def main() -> None:
     try:
-        await DatabaseConnection.connect()
+        pool = await DatabaseConnection.connect()
 
-        billing_use_case = make_billing_use_case()
+        billing_use_case = BillingUseCase(CustomerRepository(pool))
+        calculate_invoices_use_case = CalculateInvoicesUseCase(max_invoices=100000)
         protocol = env.PROTOCOL
 
         if protocol == "HTTP":
-            await start_http_server(billing_use_case)
+            await start_http_server(billing_use_case, calculate_invoices_use_case)
         elif protocol == "GRPC":
-            await start_grpc_server(billing_use_case)
+            await start_grpc_server(billing_use_case, calculate_invoices_use_case)
+        else:
+            raise ValueError("PROTOCOL must be HTTP or GRPC")
 
         await asyncio.Event().wait()
 

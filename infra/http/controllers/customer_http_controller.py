@@ -1,7 +1,9 @@
 import logging
 from aiohttp import web
 
+from app.errors import CustomerNotFoundError, InvalidCustomerIdError
 from app.use_cases.billing_use_case import BillingUseCase
+from infra.http.responses import json_response
 
 logger = logging.getLogger(__name__)
 
@@ -11,19 +13,16 @@ class CustomerHttpController:
         self.billing_use_case = billing_use_case
 
     async def process_billing(self, request: web.Request) -> web.Response:
-        customer_id = request.match_info.get("customer_id")
-        if not customer_id:
-            return web.json_response({"error": "Missing customer_id parameter"}, status=400)
-
         try:
-            result: dict = await self.billing_use_case.execute(customer_id)
-            return web.json_response(result, status=200)
+            result: dict = await self.billing_use_case.execute(request.match_info.get("customer_id"))
+            return json_response(result, status=200)
+        except InvalidCustomerIdError as error:
+            return json_response({"error": str(error)}, status=400)
+        except CustomerNotFoundError as error:
+            return json_response({"error": str(error)}, status=404)
         except Exception as error:
-            if str(error) == "Customer not found":
-                return web.json_response({"error": "Customer not found"}, status=404)
-
             logger.error(error, exc_info=True)
-            return web.json_response({"error": "Internal server error"}, status=500)
+            return json_response({"error": "Internal server error"}, status=500)
 
 
 __all__ = ["CustomerHttpController"]

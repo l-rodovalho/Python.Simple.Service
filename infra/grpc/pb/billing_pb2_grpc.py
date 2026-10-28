@@ -39,12 +39,23 @@ class BillingServiceStub:
                 request_serializer=billing__pb2.BillingRequest.SerializeToString,
                 response_deserializer=billing__pb2.BillingResponse.FromString,
                 _registered_method=True)
+        self.CalculateInvoices = channel.unary_unary(
+                '/billing.BillingService/CalculateInvoices',
+                request_serializer=billing__pb2.CalculateInvoicesRequest.SerializeToString,
+                response_deserializer=billing__pb2.CalculateInvoicesResponse.FromString,
+                _registered_method=True)
 
 
 class BillingServiceServicer:
     """Missing associated documentation comment in .proto file."""
 
     def ProcessBilling(self, request, context):
+        """Missing associated documentation comment in .proto file."""
+        context.set_code(grpc.StatusCode.UNIMPLEMENTED)
+        context.set_details('Method not implemented!')
+        raise NotImplementedError('Method not implemented!')
+
+    def CalculateInvoices(self, request, context):
         """Missing associated documentation comment in .proto file."""
         context.set_code(grpc.StatusCode.UNIMPLEMENTED)
         context.set_details('Method not implemented!')
@@ -57,6 +68,11 @@ def add_BillingServiceServicer_to_server(servicer, server):
                     servicer.ProcessBilling,
                     request_deserializer=billing__pb2.BillingRequest.FromString,
                     response_serializer=billing__pb2.BillingResponse.SerializeToString,
+            ),
+            'CalculateInvoices': grpc.unary_unary_rpc_method_handler(
+                    servicer.CalculateInvoices,
+                    request_deserializer=billing__pb2.CalculateInvoicesRequest.FromString,
+                    response_serializer=billing__pb2.CalculateInvoicesResponse.SerializeToString,
             ),
     }
     generic_handler = grpc.method_handlers_generic_handler(
@@ -86,6 +102,33 @@ class BillingService:
             '/billing.BillingService/ProcessBilling',
             billing__pb2.BillingRequest.SerializeToString,
             billing__pb2.BillingResponse.FromString,
+            options,
+            channel_credentials,
+            insecure,
+            call_credentials,
+            compression,
+            wait_for_ready,
+            timeout,
+            metadata,
+            _registered_method=True)
+
+    @staticmethod
+    def CalculateInvoices(request,
+            target,
+            options=(),
+            channel_credentials=None,
+            call_credentials=None,
+            insecure=False,
+            compression=None,
+            wait_for_ready=None,
+            timeout=None,
+            metadata=None):
+        return grpc.experimental.unary_unary(
+            request,
+            target,
+            '/billing.BillingService/CalculateInvoices',
+            billing__pb2.CalculateInvoicesRequest.SerializeToString,
+            billing__pb2.CalculateInvoicesResponse.FromString,
             options,
             channel_credentials,
             insecure,
